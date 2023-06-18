@@ -1,9 +1,7 @@
-FROM jupyter/datascience-notebook:latest
+FROM ubuntu:latest
 
-RUN apt update && apt upgrade
-
-COPY . /app/
-
-WORKDIR /app
-
-RUN pip install -r requirments.txt
+RUN apt-get update && apt upgrade -y && \
+    apt-get install -y python3
+RUN apt install -y python3-pip  
+copy . .
+RUN pip3 install -r requirments.txt

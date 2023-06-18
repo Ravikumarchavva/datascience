@@ -5,9 +5,9 @@ import json
 import sqlite3
 from flask_mail import *
 
-with open(r"D:\Ravikumar\Git\ravikumar\web_app\iPortfolio\config.json",'r') as f:
+with open(r"D:\Ravikumar\Git\datascience\iPortfolio\config.json",'r') as f:
    par = json.load(f)['params']
-with open(r"D:\Ravikumar\Git\ravikumar\web_app\iPortfolio\config.json",'r') as f:
+with open(r"D:\Ravikumar\Git\datascience\iPortfolio\config.json",'r') as f:
    model=json.load(f)['models']
 app = Flask(__name__,template_folder='templates',static_folder='static')
 app.config['MAIL_SERVER'] = 'smtp.gmail.com'
@@ -22,6 +22,61 @@ mail = Mail(app)
 @app.route('/', methods=['GET', 'POST'])
 def index():
     return render_template('index.html',params=par)
+@app.route("/about")
+def about():
+   return render_template("about.html",params=par)
+@app.route("/work")
+def work():
+   return render_template("work.html",params=par,mod=list(model.keys()))
+@app.route("/work/<string:model_slug>",methods=["GET"])
+def work_slug(model_slug):
+   model_db=sqlite3.connect(par['db_uri'])
+   model_cur=model_db.cursor()
+   slug_name="ipl_fsp"
+   model_cur.execute(f"SELECT * FROM ml_models WHERE slug='{slug_name}'")
+   mc=model_cur.fetchone()
+   model={
+      'name':mc[1],
+      'slug':mc[2],
+      'date':mc[3]
+   }
+   return render_template("work.html",params=par,mod=model)
+@app.route("/services")
+def services():
+   return render_template("services.html",params=par)
+@app.route("/blog")
+def blog():
+   return render_template("blog.html",params=par)
+@app.route("/contact",methods=['GET','POST'])
+def contact_form():
+   if(request.method == 'POST'):
+      con=sqlite3.connect(par['db_uri'])
+      cur=con.cursor()
+      username= request.form.get("name")
+      email= request.form.get("email")
+      about= request.form.get("subject")
+      msg= request.form.get("message")
+      try:
+         cur.execute(f"insert into Contact (name,mail,subject,message) \
+                     values ('{username}', '{email}','{about}','{msg}')  " )
+         con.commit()
+         con.close()
+      except Exception as e:
+         print(e)
+      send_mess = Message("you got a mail from "+ username,
+                  sender=email,
+                  recipients=[par['gmail-user']],
+                  body=msg)
+      try:
+         print("hi")
+         mail.send(send_mess)
+         print("hi")
+         return "sent message"
+      except Exception as e:
+         print(e)
+         return  "message error"
+   return render_template("contact.html",params=par)
+
 
 if (__name__ == "__main__"):
    app.run(debug=True)
