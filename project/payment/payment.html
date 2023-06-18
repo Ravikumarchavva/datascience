@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>payment</title>
+        <link href="payment.css" rel="stylesheet" type="text/css">
+        </head>
+    <body style="background-color:Cyan;">
+    <form>
+   <div class="svce">
+       <h1>SVCE Paymemt</h1>
+   </div class="container">
+    <h3>Contact information</h3>
+    <p>
+        First name: <input type="text" name="fname" required placeholder="Common name">
+        <br> <br>
+        Last name: <input type="text" name="lname" required placeholder="House name"  >
+        <br><br>
+        Rollno:<input type="text" name="rollno" id="rollno" required placeholder="26YSST23FW">
+    </p>
+    <fieldset>
+    <legend class="gender">Gender</legend>
+        <p>
+        Male:<input type="radio" name="gender" id="Male">
+        Female:<input type="radio" name="gender" id="Female">
+        Both:<input type="radio" name="gender" id="Both">
+        </p>
+    </fieldset>
+    <br>
+        Email:<input type="email" name="email" id="email" required placeholder="ABC@gmail.com">
+        <br><br>
+        Phone number:<input type="number" name="pno" id="pno" required placeholder="1234567890">
+       <br><br>
+       Address:<textarea name="address" id="address" cols="40" rows="2" placeholder="Los angels,America""></textarea>
+            <br>
+      Pincode:<input type="number" name="pincode" id="pincode"   placeholder="627388">
+       <h3>Payment method</h3>
+       <p>
+           Card type:<select type="select" name="card_type" id="card_type" required>
+             <option name="">--select card--</option>
+               <option name="visa">visa</option>
+                 <option name="rupay">rupay</option>
+                   <option name="mastercard">mastercard</option>
+                     <option name="platinum">platinum</option>
+           </select>
+       </p>
+       <p>
+           Card number:<input type="number" name="c_n" id="c_n" required placeholder="1828-3893-7929">
+       </p>
+       <p>
+           Expire date:<input type="month" name="expite_date"
+           id="expire_date" required placeholder="foo">
+       </p>
+       <p>
+           Cvv: <input type="password" name="cvv" id="cvv" size="1" required placeholder="123">
+            </p>
+            <p>
+                Card Holder Name:<input type="text" name="chn" id="chn" required placeholder="james">
+            </p>
+            <p>
+                Enter amount:<input type="number" name="amount" id="amount" required placeholder="inr.10000">
+            </p>
+            <input type="submit" value="pay now">
+            <input type="reset" value="reset">
+            <p>
+                <h4 class="detail">To know fee structure scroll down</h4>
+            </p>
+            <table>
+                <th><h5>Scholar ship</h5></th>
+                <th><h5>CAT-A total fee</h5></th>
+                <th><h5>Fee in 1st sem</h5></th>
+                <th><h5>CAT-B total fee</h5></th>
+                <th><h5>Fee in 1st sem</h5></th>
+                <tr>
+                    <th>1</th>
+                    <td>52000</td>
+                    <td>26000</td>
+                    <td>125000</td>
+                    <td>62500</td>
+                </tr>
+                <tr>
+                    <th>2</th>
+                    <td>72000</td>
+                    <td>36000</td>
+                    <td>150000</td>
+                    <td>75000</td>
+                </tr>
+                <tr>
+                    <th>3</th>
+                    <td>150000</td>
+                    <td>75000</td>
+                    <td>200000</td>
+                    <td>100000</td>
+                </tr>
+                <tr>
+                    <th>4</th>
+                    <td>200000</td>
+                    <td>100000</td>
+                    <td>250000</td>
+                    <td>125000</td>
+                </tr>
+                
+            </table>
+            
+      </form> 
+    </body>
+</html>

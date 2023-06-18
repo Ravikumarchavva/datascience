@@ -1,0 +1,59 @@
+{%extends "layout.html" %}
+{% block body %}
+{%set fname='img/'+ ipl-fig.jpg %}
+<div class="intro route bg-image" style="background-image: url({{url_for('static',filename=fname)}})">
+  <div class="owl-theme">
+    <div class="owl-dots">
+        <div class="owl-dot">
+          <div class="paralax-mf">
+            <div class="box-pl2">
+            <h3 align="center">ipl predict</h3>
+            <form method="post" action="" role="form" class="contactform">
+              inning: <select type="text" name="inning" required placeholder="1">
+                <option value="1">1</option>
+                <option value="2">2</option>
+                </select>
+              <hr>
+              team1:<select name="team-1" id="team" required>
+                <option value="1">Chennai Super Kings</option>
+                <option value="2">Delhi Capitals</option>
+                <option value="3">Delhi Daredevils</option>
+                <option value="3">batting_team_Mumbai Indians</option>
+                <option value="3">batting_team_Rajasthan Royals</option>
+                <option value="3">batting_team_Rising Pune Supergiant</option>
+                <option value="3">batting_team_Royal Challengers Bangalore</option>
+                <option value="3">batting_team_Sunrisers Hyderabad</option>
+                </select>
+                <hr>
+              team2:<select name="team-1" id="team" required>
+                  <option value="1">bowling_team_Chennai Super Kings</option>
+                  <option value="2">Banglore</option>
+                  <option value="3">Tirupati</option>
+                  <option value="3">Tirupati</option>
+                  <option value="3">Tirupati</option>
+                  <option value="3">Tirupati</option>
+                  <option value="3">Tirupati</option>
+                  <option value="3">Tirupati</option>
+                  <option value="3">Tirupati</option>
+                  <option value="3">Tirupati</option>
+                  </select>  
+                  <hr>
+              power play score :  <input type="text" name="pps" required placeholder="100">
+              <hr>
+              power play wickets :  <input type="text" name="ppw" required placeholder="1">
+              <hr>
+             <button type="button" class="button button-a button-big button-rouded">Predict</button>
+             <div class="paralax-mf">
+              <h3>Final predicted score is</h3>
+              <h3>{{mod['name']}}</h3>
+             </div>
+            </form>
+            </div>
+          </div>
+        </div>
+      </div>
+  </div>
+</div>
+
+
+{%endblock%}

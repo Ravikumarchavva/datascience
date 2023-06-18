@@ -1,0 +1,8 @@
+CREATE TABLE [dbo].[test] (
+    [no]   INT          NULL,
+    [name] VARCHAR (20) NULL
+);
+
+
+GO
+
