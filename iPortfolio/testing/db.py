@@ -5,7 +5,7 @@ import json
 import sqlite3
 from flask_mail import *
 app=Flask(__name__)
-with open(r"D:\Ravikumar\Git\datascience\app\config.json",'r') as f:
+with open(r"D:\Ravikumar\Git\ravikumar\app_service\app\config.json",'r') as f:
    par = json.load(f)['params']
 print(1)
 with app.app_context():
