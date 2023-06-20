@@ -57,7 +57,7 @@ def get_ipl_fsp():
    m=load(open(model_names['ipl_model_2'],"rb"))
    if(request.method == 'POST'):
       inning=request.form.get("inning")
-      teams={0: 'Chennai Super Kings',1: 'Delhi Capitals',2: 'Gujarat Lions',3: 'Kings XI Punjab',4: 'Kolkata Knight Riders',
+      teams={  0: 'Chennai Super Kings',1: 'Delhi Capitals',2: 'Gujarat Lions',3: 'Kings XI Punjab',4: 'Kolkata Knight Riders',
             5: 'Mumbai Indians',6: 'Pune Warriors',7: 'Rajasthan Royals',8: 'Royal Challengers Bangalore',9: 'Sunrisers Hyderabad'}
 
       batting_teams=['Chennai Super Kings batting team', 'Delhi Capitals batting team','Gujarat Lions batting team', 'Kings XI Punjab batting team',
@@ -67,26 +67,21 @@ def get_ipl_fsp():
       bowling_teams=['Chennai Super Kings bowling team', 'Delhi Capitals bowling team','Gujarat Lions bowling team', 'Kings XI Punjab bowling team',
          'Kolkata Knight Riders bowling team','Mumbai Indians bowling team', 'Pune Warriors bowling team','Rajasthan Royals bowling team',
          'Royal Challengers Bangalore bowling team','Sunrisers Hyderabad bowling team']
-      team1=request.form.get('team1')
-      team2=request.form.get('team2')
+      team1=request.form['team1']
+      team2=request.form['team2']
       if(team1==team2):
-         print ("invalid team")
-         return render_template("model.html",params=par,mod=model,score="NA")
-      bat=request.form.get('batting_team') 
+         return render_template("model.html",params=par,mod=model,score="invalid_team",t=teams,ba_t=batting_teams,bo_t=bowling_teams)
+      bat=request.form.get('batting_team')
       bowl=request.form.get('bowling_team')
       if(bat==bowl):
-         print("invalid selection")
-         return render_template("model.html",params=par,mod=model,score="NA")
+         return render_template("model.html",params=par,mod=model,score="invalid_selection",t=teams,ba_t=batting_teams,bo_t=bowling_teams)
       ba_t=[1 if x==bat else 0 for x in batting_teams ]
       bo_t=[1 if x==bowl else 0 for x in bowling_teams ]
-      team_A=[key for key,value in teams.items() if value==team1]
-      team_B=[key for key,value in teams.items() if value==team2]
-      toss_winners=[teams[team_A[0]],teams[team_B[0]]]
-      toss=request.form.get('toss_win')
-      if toss==toss_winners[0]:
-         toss_winner=[key for key,value in teams.items() if value==toss]
+      toss=request.form['toss_win']
+      if toss==team1:
+         toss_winner=team1
       else:
-         toss_winner=[key for key,value in teams.items() if value==toss_winners[1]]
+         toss_winner=team2
       toss_decisions=["feild","bat"]
       toss_taken=request.form.get('toss_decision')
       if toss_taken==toss_decisions[0]:
@@ -95,11 +90,13 @@ def get_ipl_fsp():
          toss_decision=0
       powerplay_runs=request.form.get("powerplay_runs")
       powerplay_wickets=request.form.get("powerplay_wickets")
-      powerplay_run_rate=powerplay_runs[0]/6
-      input_list=[[inning]+ba_t+bo_t+team_A+team_B+toss_winner+[toss_decision,powerplay_runs,powerplay_wickets,powerplay_run_rate]]
+      powerplay_run_rate=int(powerplay_runs)/6
+      print(inning,ba_t,bo_t,team1,team2,toss_winner,toss_decision,powerplay_run_rate,powerplay_wickets,powerplay_runs)
+      input_list=[[int(inning)]+ba_t+bo_t+[int(team1),int(team2)]+[int(toss_winner)]+[toss_decision,int(powerplay_runs),int(powerplay_wickets),powerplay_run_rate]]
+      print(input_list)
       s=m.predict(input_list)
-      return render_template("model.html",params=par,mod=model,score=s)
-   return render_template("model.html",params=par,mod=model,score="calculate")
+      return render_template("model.html",params=par,mod=model,score=s,t=teams,ba_t=batting_teams,bo_t=bowling_teams)
+   return render_template("model.html",params=par,mod=model,score="calculate",t=teams,ba_t=batting_teams,bo_t=bowling_teams)
 
 @app.route("/services")
 def services():
@@ -141,27 +138,3 @@ def contact_form():
 
 if (__name__ == "__main__"):
    app.run(debug=True)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-   
